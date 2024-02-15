@@ -27,6 +27,11 @@ export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
         throw new InvalidInvocationParameterError(msg);
     }
 
+    if (typeof match !== 'function') {
+        const msg = `expected match to be a function but got ${match}`;
+        throw new InvalidInvocationParameterError(msg);
+    }
+
     let cursor = 0;
     const iterable = {
         [Symbol.iterator]() {

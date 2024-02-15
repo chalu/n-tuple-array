@@ -43,4 +43,11 @@ describe('Smoke Tests', () => {
         }
         expect(functionInClientCode).toThrow(InvalidInvocationParameterError);
     });
+
+    it('should throw if the match param not a function', () => {
+        function functionInClientCode() {
+            nTupleFromArray({list: [], match: {}});
+        }
+        expect(functionInClientCode).toThrow(InvalidInvocationParameterError);
+    });
 });
