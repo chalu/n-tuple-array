@@ -1,54 +1,40 @@
-type PositiveInteger = number & { __brand: 'PositiveInteger' };
-
-function isPositiveInteger(n: number): asserts n is PositiveInteger {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.nTupleFromArray = exports.InvalidInvocationParameterError = void 0;
+function isPositiveInteger(n) {
     if (typeof n === 'number' && n <= 0) {
         throw Error(`expected a positive integer (1 and above) but got ${n}`);
     }
 }
-
-interface IterationResult<T> {
-    done: boolean;
-    value: Array<T | undefined | null>;
+class InvalidInvocationParameterError extends Error {
 }
-
-export interface nTupleConfig<T> {
-    list: T[];
-    maxItems?: number;
-    match?: (item: T | undefined) => boolean;
-}
-
-export class InvalidInvocationParameterError extends Error {};
-
-export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
+exports.InvalidInvocationParameterError = InvalidInvocationParameterError;
+;
+const nTupleFromArray = (config) => {
     const { list, maxItems = 2, match = (_) => true } = config;
-
     if (!list || !Array.isArray(list)) {
         throw new InvalidInvocationParameterError(`expected list to be an array but got ${typeof list}`);
     }
-
     isPositiveInteger(maxItems);
-
     let cursor = 0;
     const iterable = {
         [Symbol.iterator]() {
-            function next(): IterationResult<T> {
-                if (cursor >= list.length) return { done: true, value: [] };
-
-                const items: Array<T | undefined | null> = [];
+            function next() {
+                if (cursor >= list.length)
+                    return { done: true, value: [] };
+                const items = [];
                 const endIndex = cursor + maxItems;
                 while (cursor < endIndex) {
                     const item = list[cursor];
                     cursor += 1;
-
-                    if (!match(item)) continue;
-
+                    if (!match(item))
+                        continue;
                     items.push(item);
                 }
-
                 return { done: false, value: items };
             }
         }
     };
-
     return iterable;
 };
+exports.nTupleFromArray = nTupleFromArray;
