@@ -14,10 +14,11 @@ interface IterationResult<T> {
 export interface nTupleConfig<T> {
     list: T[];
     maxItems?: number;
+    match?: (item: T | undefined) => boolean;
 }
 
 export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
-    const { list, maxItems = 2 } = config;
+    const { list, maxItems = 2, match = (_) => true } = config;
     isPositiveInteger(maxItems);
 
     let cursor = 0;
@@ -31,6 +32,8 @@ export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
                 while (cursor < endIndex) {
                     const item = list[cursor];
                     cursor += 1;
+
+                    if (!match(item)) continue;
 
                     items.push(item);
                 }
