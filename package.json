@@ -1,0 +1,21 @@
+{
+  "name": "n-tuple-array",
+  "version": "0.1",
+  "description": "Get a specified amount of items when iterating over an array, instead of only one item!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Charles Odili <chaluwa@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
+

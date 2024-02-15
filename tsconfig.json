@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig to read more about this file */
+    /* Language and Environment */
+    "target": "ESNext", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */ /* Control what method is used to detect module-format JS files. */
+    /* Modules */
+    "module": "commonjs", /* Specify what module code is generated. */
+    "rootDir": "./src", /* Specify the root folder within your source files. */
+    /* Emit */
+    "declaration": true, /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
+    "outDir": "./dist", /* Specify an output folder for all emitted files. */
+    "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */ /* Ensure that casing is correct in imports. */
+    /* Type Checking */
+    "strict": true, /* Skip type checking all .d.ts files. */
+    "noUncheckedIndexedAccess": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
