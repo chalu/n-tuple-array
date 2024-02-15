@@ -3,17 +3,16 @@ interface IterationResult<T> {
     value: Array<T | undefined | null>;
 }
 
+type Matcher<T> = (item: T | undefined) => boolean;
 export interface nTupleConfig<T> {
     list: T[];
     maxItems?: number;
-    match?: (item: T | undefined) => boolean;
+    match?: Matcher<T>;
 }
 
 export class InvalidInvocationParameterError extends Error {};
 
-export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
-    const { list, maxItems = 2, match = (_) => true } = config;
-
+const validateParamsOrThrow = <T>(list: T[], maxItems: number, match: Matcher<T>) => {
     if (!list || !Array.isArray(list)) {
         const msg = `expected list to be an array but got ${list}`;
         throw new InvalidInvocationParameterError(msg);
@@ -31,6 +30,11 @@ export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
         const msg = `expected match to be a function but got ${match}`;
         throw new InvalidInvocationParameterError(msg);
     }
+}
+
+export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
+    const { list, maxItems = 2, match = (_) => true } = config;
+    validateParamsOrThrow(list, maxItems, match);
 
     let cursor = 0;
     const iterable = {

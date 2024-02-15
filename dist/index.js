@@ -5,8 +5,7 @@ class InvalidInvocationParameterError extends Error {
 }
 exports.InvalidInvocationParameterError = InvalidInvocationParameterError;
 ;
-const nTupleFromArray = (config) => {
-    const { list, maxItems = 2, match = (_) => true } = config;
+const validateParamsOrThrow = (list, maxItems, match) => {
     if (!list || !Array.isArray(list)) {
         const msg = `expected list to be an array but got ${list}`;
         throw new InvalidInvocationParameterError(msg);
@@ -20,6 +19,10 @@ const nTupleFromArray = (config) => {
         const msg = `expected match to be a function but got ${match}`;
         throw new InvalidInvocationParameterError(msg);
     }
+};
+const nTupleFromArray = (config) => {
+    const { list, maxItems = 2, match = (_) => true } = config;
+    validateParamsOrThrow(list, maxItems, match);
     let cursor = 0;
     const iterable = {
         [Symbol.iterator]() {
