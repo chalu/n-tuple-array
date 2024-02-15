@@ -41,5 +41,6 @@ jobs:
       - name: Summarise Tests
         uses: test-summary/action@v2
         with:
-          paths: "__tests__/summary.tap"
+          paths: "__tests__/summary.xml"
+          show: "fail, skip"
         if: always()
