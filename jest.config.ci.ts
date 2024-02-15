@@ -9,9 +9,6 @@ const jestConfig: JestConfigWithTsJest = {
   ],
   reporters: [
     "default",
-    ["jest-tap-reporter", {
-      "filePath": "__tests__/summary.tap"
-    }],
     ["jest-junit", {
       "outputFile": "__tests__/summary.xml"
     }]
