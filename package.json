@@ -10,7 +10,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "pnpm build && jest"
+    "test:ci": "jest",
+    "test": "pnpm build && jest --runInBand"
   },
   "keywords": [],
   "author": "Charles Odili <chaluwa@gmail.com>",
