@@ -22,4 +22,25 @@ describe('Smoke Tests', () => {
         }
         expect(functionInClientCode).toThrow(InvalidInvocationParameterError);
     });
+
+    it('should throw if maxItems param not a number', () => {
+        function functionInClientCode() {
+            nTupleFromArray({list: [], maxItems: {}});
+        }
+        expect(functionInClientCode).toThrow(InvalidInvocationParameterError);
+    });
+
+    it('should throw if maxItems param is 0', () => {
+        function functionInClientCode() {
+            nTupleFromArray({list: [], maxItems: 0});
+        }
+        expect(functionInClientCode).toThrow(InvalidInvocationParameterError);
+    });
+
+    it('should throw if maxItems param is < 0', () => {
+        function functionInClientCode() {
+            nTupleFromArray({list: [], maxItems: -2});
+        }
+        expect(functionInClientCode).toThrow(InvalidInvocationParameterError);
+    });
 });

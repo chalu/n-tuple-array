@@ -1,11 +1,3 @@
-type PositiveInteger = number & { __brand: 'PositiveInteger' };
-
-function isPositiveInteger(n: number): asserts n is PositiveInteger {
-    if (typeof n === 'number' && n <= 0) {
-        throw Error(`expected a positive integer (1 and above) but got ${n}`);
-    }
-}
-
 interface IterationResult<T> {
     done: boolean;
     value: Array<T | undefined | null>;
@@ -23,10 +15,17 @@ export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
     const { list, maxItems = 2, match = (_) => true } = config;
 
     if (!list || !Array.isArray(list)) {
-        throw new InvalidInvocationParameterError(`expected list to be an array but got ${typeof list}`);
+        const msg = `expected list to be an array but got ${list}`;
+        throw new InvalidInvocationParameterError(msg);
     }
 
-    isPositiveInteger(maxItems);
+    if (
+        typeof maxItems !== 'number'
+        || (typeof maxItems === 'number' && maxItems <= 0)
+    ) {
+        const msg = `expected maxItems to be a positive integer (1 and above) but got ${maxItems}`;
+        throw new InvalidInvocationParameterError(msg);
+    }
 
     let cursor = 0;
     const iterable = {

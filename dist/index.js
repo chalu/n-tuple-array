@@ -1,11 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.nTupleFromArray = exports.InvalidInvocationParameterError = void 0;
-function isPositiveInteger(n) {
-    if (typeof n === 'number' && n <= 0) {
-        throw Error(`expected a positive integer (1 and above) but got ${n}`);
-    }
-}
 class InvalidInvocationParameterError extends Error {
 }
 exports.InvalidInvocationParameterError = InvalidInvocationParameterError;
@@ -13,9 +8,14 @@ exports.InvalidInvocationParameterError = InvalidInvocationParameterError;
 const nTupleFromArray = (config) => {
     const { list, maxItems = 2, match = (_) => true } = config;
     if (!list || !Array.isArray(list)) {
-        throw new InvalidInvocationParameterError(`expected list to be an array but got ${typeof list}`);
+        const msg = `expected list to be an array but got ${list}`;
+        throw new InvalidInvocationParameterError(msg);
     }
-    isPositiveInteger(maxItems);
+    if (typeof maxItems !== 'number'
+        || (typeof maxItems === 'number' && maxItems <= 0)) {
+        const msg = `expected maxItems to be a positive integer (1 and above) but got ${maxItems}`;
+        throw new InvalidInvocationParameterError(msg);
+    }
     let cursor = 0;
     const iterable = {
         [Symbol.iterator]() {
