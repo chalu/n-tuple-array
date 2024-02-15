@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "test": "pnpm build && jest --runInBand",
-    "test:ci": "jest --json --outputFile='__tests__/summary.json' --coverage --coverageReporters json-summary"
+    "test:ci": "jest --ci --config='./jest.config.ci.ts'"
   },
   "keywords": [],
   "author": "Charles Odili <chaluwa@gmail.com>",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
+    "jest-tap-reporter": "^1.9.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"

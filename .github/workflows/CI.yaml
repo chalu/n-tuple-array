@@ -41,5 +41,5 @@ jobs:
       - name: Summarise Tests
         uses: test-summary/action@v2
         with:
-          paths: "__tests__/summary.json"
+          paths: "__tests__/summary.tap"
         if: always()
