@@ -37,3 +37,9 @@ jobs:
 
       - name: Run Unit Tests
         run: pnpm test:ci
+
+      - name: Summarise Tests
+        uses: test-summary/action@v2
+        with:
+          paths: "__tests__/summary.json"
+        if: always()
