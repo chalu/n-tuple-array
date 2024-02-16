@@ -1,62 +1,81 @@
-interface IterationResult<T> {
-    done: boolean;
-    value: Array<T | undefined | null>;
-}
+type IterationResult<T> = {
+	done: boolean;
+	value: Array<T | undefined >;
+};
 
 type Matcher<T> = (item: T | undefined) => boolean;
-export interface nTupleConfig<T> {
-    list: T[];
-    maxItems?: number;
-    match?: Matcher<T>;
-}
+export type TupleConfig<T> = {
+	list: T[];
+	maxItems?: number;
+	match?: Matcher<T>;
+};
 
-export class InvalidInvocationParameterError extends Error {};
+export class InvalidInvocationParameterError extends Error {}
 
-const validateParamsOrThrow = <T>(list: T[], maxItems: number, match: Matcher<T>) => {
-    if (!list || !Array.isArray(list)) {
-        const msg = `expected list to be an array but got ${list}`;
-        throw new InvalidInvocationParameterError(msg);
-    }
+const validateParametersOrThrow = <T>(list: T[], maxItems: number, match: Matcher<T> | undefined) => {
+	if (!list || !Array.isArray(list)) {
+		throw new InvalidInvocationParameterError('expected list to be an array');
+	}
 
-    if (
-        typeof maxItems !== 'number'
+	if (
+		typeof maxItems !== 'number'
         || (typeof maxItems === 'number' && maxItems <= 0)
-    ) {
-        const msg = `expected maxItems to be a positive integer (1 and above) but got ${maxItems}`;
-        throw new InvalidInvocationParameterError(msg);
-    }
+	) {
+		const message = 'expected maxItems (when provided) to be a positive integer (1 and above)';
+		throw new InvalidInvocationParameterError(message);
+	}
 
-    if (typeof match !== 'function') {
-        const msg = `expected match to be a function but got ${match}`;
-        throw new InvalidInvocationParameterError(msg);
-    }
-}
+	if (match !== undefined && typeof match !== 'function') {
+		const message = 'expected match (when provided) to be a function';
+		throw new InvalidInvocationParameterError(message);
+	}
+};
 
-export const nTupleFromArray = <T>(config: nTupleConfig<T>) => {
-    const { list, maxItems = 2, match = (_) => true } = config;
-    validateParamsOrThrow(list, maxItems, match);
+export const tuplesFromArray = <T>(config: TupleConfig<T>) => {
+	const {list, match, maxItems = 2} = config;
+	validateParametersOrThrow(list, maxItems, match);
 
-    let cursor = 0;
-    const iterable = {
-        [Symbol.iterator]() {
-            function next(): IterationResult<T> {
-                if (cursor >= list.length) return { done: true, value: [] };
+	let cursor = 0;
+	const maxItemSize = Number.parseInt(`${maxItems}`, 10);
+	const iterable = {
+		[Symbol.iterator]() {
+			return this;
+		},
 
-                const items: Array<T | undefined | null> = [];
-                const endIndex = cursor + maxItems;
-                while (cursor < endIndex) {
-                    const item = list[cursor];
-                    cursor += 1;
+		next(): IterationResult<T> {
+			if (cursor >= list.length) {
+				return {done: true, value: []};
+			}
 
-                    if (!match(item)) continue;
+			const items: Array<T | undefined > = [];
+			const endIndex = match === undefined
+			// A match funtion was provided. Okay to run to array end
+			// or until we've matched maxItemSize elements
+				? Math.min(cursor + maxItemSize, list.length)
 
-                    items.push(item);
-                }
+			// No match function was provided. We should run till we are
+			// out of items (list.length) or till we gotten the next set
+			// of maxItemSize items
+				: list.length;
 
-                return { done: false, value: items };
-            }
-        }
-    };
+			while (cursor < endIndex) {
+				const item = list[cursor];
+				cursor += 1;
 
-    return iterable;
+				if (match && !match(item)) {
+					continue;
+				}
+
+				items.push(item);
+
+				if (match && items.length === maxItemSize) {
+					break;
+				}
+			}
+
+			return {done: false, value: items};
+		},
+	};
+
+	return iterable;
 };

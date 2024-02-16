@@ -10,7 +10,9 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "pnpm build && jest --runInBand",
+    "lint": "xo --env=jest",
+    "lint:fix": "xo --env=jest --fix",
+    "test": "pnpm lint && pnpm build && jest --runInBand",
     "test:ci": "jest --ci --config='./jest.config.ci.ts'"
   },
   "keywords": [],
@@ -24,6 +26,7 @@
     "jest-junit": "^16.0.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "xo": "^0.57.0"
   }
 }
