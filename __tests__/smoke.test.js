@@ -50,4 +50,6 @@ describe('Smoke Tests', () => {
         }
         expect(functionInClientCode).toThrow(InvalidInvocationParameterError);
     });
+
 });
+
