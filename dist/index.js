@@ -1,47 +1,59 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.nTupleFromArray = exports.InvalidInvocationParameterError = void 0;
+exports.tuplesFromArray = exports.InvalidInvocationParameterError = void 0;
 class InvalidInvocationParameterError extends Error {
 }
 exports.InvalidInvocationParameterError = InvalidInvocationParameterError;
-;
-const validateParamsOrThrow = (list, maxItems, match) => {
+const validateParametersOrThrow = (list, maxItems, match) => {
     if (!list || !Array.isArray(list)) {
-        const msg = `expected list to be an array but got ${list}`;
-        throw new InvalidInvocationParameterError(msg);
+        throw new InvalidInvocationParameterError('expected list to be an array');
     }
     if (typeof maxItems !== 'number'
         || (typeof maxItems === 'number' && maxItems <= 0)) {
-        const msg = `expected maxItems to be a positive integer (1 and above) but got ${maxItems}`;
-        throw new InvalidInvocationParameterError(msg);
+        const message = 'expected maxItems (when provided) to be a positive integer (1 and above)';
+        throw new InvalidInvocationParameterError(message);
     }
-    if (typeof match !== 'function') {
-        const msg = `expected match to be a function but got ${match}`;
-        throw new InvalidInvocationParameterError(msg);
+    if (match !== undefined && typeof match !== 'function') {
+        const message = 'expected match (when provided) to be a function';
+        throw new InvalidInvocationParameterError(message);
     }
 };
-const nTupleFromArray = (config) => {
-    const { list, maxItems = 2, match = (_) => true } = config;
-    validateParamsOrThrow(list, maxItems, match);
+const tuplesFromArray = (config) => {
+    const { list, match, maxItems = 2 } = config;
+    validateParametersOrThrow(list, maxItems, match);
     let cursor = 0;
+    const maxItemSize = Number.parseInt(`${maxItems}`, 10);
     const iterable = {
         [Symbol.iterator]() {
-            function next() {
-                if (cursor >= list.length)
-                    return { done: true, value: [] };
-                const items = [];
-                const endIndex = cursor + maxItems;
-                while (cursor < endIndex) {
-                    const item = list[cursor];
-                    cursor += 1;
-                    if (!match(item))
-                        continue;
-                    items.push(item);
-                }
-                return { done: false, value: items };
+            return this;
+        },
+        next() {
+            if (cursor >= list.length) {
+                return { done: true, value: [] };
             }
-        }
+            const items = [];
+            const endIndex = match === undefined
+                // A match funtion was provided. Okay to run to array end
+                // or until we've matched maxItemSize elements
+                ? Math.min(cursor + maxItemSize, list.length)
+                // No match function was provided. We should run till we are
+                // out of items (list.length) or till we gotten the next set
+                // of maxItemSize items
+                : list.length;
+            while (cursor < endIndex) {
+                const item = list[cursor];
+                cursor += 1;
+                if (match && !match(item)) {
+                    continue;
+                }
+                items.push(item);
+                if (match && items.length === maxItemSize) {
+                    break;
+                }
+            }
+            return { done: false, value: items };
+        },
     };
     return iterable;
 };
-exports.nTupleFromArray = nTupleFromArray;
+exports.tuplesFromArray = tuplesFromArray;
