@@ -13,7 +13,8 @@
     "lint": "xo --env=jest",
     "lint:fix": "xo --env=jest --fix",
     "test": "pnpm lint && pnpm build && jest --runInBand",
-    "test:ci": "jest --ci --config='./jest.config.ci.ts'"
+    "test:ci": "jest --ci --config='./jest.config.ci.ts'",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "Charles Odili <chaluwa@gmail.com>",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@types/jest": "^29.5.12",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
     "jest-extended": "^4.0.2",
     "jest-junit": "^16.0.0",
