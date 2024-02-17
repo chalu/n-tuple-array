@@ -10,9 +10,12 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "lint": "xo --env=jest",
-    "lint:fix": "xo --env=jest --fix",
-    "test": "pnpm lint && pnpm build && jest --runInBand",
+    "prebuild": "rm -rf dist/*",
+    "postbuild": "rm -rf dist/demo/*.d.*",
+    "lint": "xo",
+    "lint:fix": "xo --fix",
+    "test": "jest --runInBand",
+    "pretest": "pnpm lint && pnpm build",
     "test:ci": "jest --ci --config='./jest.config.ci.ts'",
     "prepare": "husky"
   },
