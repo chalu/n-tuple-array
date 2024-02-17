@@ -1,22 +1,24 @@
 {
   "name": "n-tuple-array",
   "version": "0.1",
-  "description": "Get a specified amount of items when iterating over an array, instead of only one item!",
+  "description": "Get a specified amount of items when iterating over a JavaScript array, instead of just a single item that native arrays provide!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
   ],
-  "type": "module",
   "scripts": {
     "build": "tsc",
-    "lint": "xo --env=jest",
-    "lint:fix": "xo --env=jest --fix",
-    "test": "pnpm lint && pnpm build && jest --runInBand",
+    "prebuild": "rm -rf dist/*",
+    "postbuild": "rm -rf dist/demo/*.d.*",
+    "lint": "xo",
+    "lint:fix": "xo --fix",
+    "test": "jest --runInBand",
+    "pretest": "pnpm lint && pnpm build",
     "test:ci": "jest --ci --config='./jest.config.ci.ts'",
     "prepare": "husky"
   },
-  "keywords": [],
+  "keywords": ["array", "tuple", "arrays", "tuples", "iterables", "iterators", "symbol.iterator", "javascript", "typescript"],
   "author": "Charles Odili <chaluwa@gmail.com>",
   "license": "MIT",
   "devDependencies": {

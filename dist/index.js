@@ -23,37 +23,40 @@ const tuplesFromArray = (config) => {
     validateParametersOrThrow(list, maxItems, match);
     let cursor = 0;
     const maxItemSize = Number.parseInt(`${maxItems}`, 10);
+    const proceedNext = () => {
+        const items = [];
+        if (cursor >= list.length) {
+            return { done: true, value: [] };
+        }
+        const endIndex = match === undefined
+            // A match funtion was provided. Okay to run to array end
+            // or until we've matched maxItemSize elements
+            ? Math.min(cursor + maxItemSize, list.length)
+            // No match function was provided. We should run till we are
+            // out of items (list.length) or till we gotten the next set
+            // of maxItemSize items
+            : list.length;
+        while (cursor < endIndex) {
+            const item = list[cursor];
+            cursor += 1;
+            if (match && !match(item)) {
+                continue;
+            }
+            items.push(item);
+            if (match && items.length === maxItemSize) {
+                break;
+            }
+        }
+        return { value: items, done: items.length === 0 };
+    };
     const iterable = {
         [Symbol.iterator]() {
-            return this;
-        },
-        next() {
-            if (cursor >= list.length) {
-                return { done: true, value: [] };
-            }
-            const items = [];
-            const endIndex = match === undefined
-                // A match funtion was provided. Okay to run to array end
-                // or until we've matched maxItemSize elements
-                ? Math.min(cursor + maxItemSize, list.length)
-                // No match function was provided. We should run till we are
-                // out of items (list.length) or till we gotten the next set
-                // of maxItemSize items
-                : list.length;
-            while (cursor < endIndex) {
-                const item = list[cursor];
-                cursor += 1;
-                if (match && !match(item)) {
-                    continue;
-                }
-                items.push(item);
-                if (match && items.length === maxItemSize) {
-                    break;
-                }
-            }
-            return { done: false, value: items };
+            return {
+                next: proceedNext,
+            };
         },
     };
     return iterable;
 };
 exports.tuplesFromArray = tuplesFromArray;
+exports.default = exports.tuplesFromArray;
