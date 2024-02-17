@@ -7,7 +7,6 @@
   "files": [
     "/dist"
   ],
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "prebuild": "rm -rf dist/*",
