@@ -1,6 +1,11 @@
 {
+    "env": ["jest", "node"],
     "rules": {
         "import/extensions": "off",
-        "unicorn/prefer-module": "off"
+        "unicorn/prefer-module": "off",
+        "unicorn/no-array-for-each": "off",
+        "unicorn/prefer-top-level-await": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off"
     }
 }
