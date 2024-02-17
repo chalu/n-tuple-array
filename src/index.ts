@@ -1,9 +1,8 @@
-type IterationResult<T> = {
-	done: boolean;
-	value: Array<T | undefined >;
-};
+type Item<T> = T | undefined;
+type Value<T> = Array<Item<T>>;
+type Result<T> = IteratorResult<Value<T>, Value<T>>;
 
-type Matcher<T> = (item: T | undefined) => boolean;
+export type Matcher<T> = (item: T | unknown) => boolean;
 export type TupleConfig<T> = {
 	list: T[];
 	maxItems?: number;
@@ -37,45 +36,51 @@ export const tuplesFromArray = <T>(config: TupleConfig<T>) => {
 
 	let cursor = 0;
 	const maxItemSize = Number.parseInt(`${maxItems}`, 10);
-	const iterable = {
-		[Symbol.iterator]() {
-			return this;
-		},
 
-		next(): IterationResult<T> {
-			if (cursor >= list.length) {
-				return {done: true, value: []};
-			}
+	const proceedNext = (): Result<T> => {
+		const items: Value<T> = [];
 
-			const items: Array<T | undefined > = [];
-			const endIndex = match === undefined
+		if (cursor >= list.length) {
+			return {done: true, value: []};
+		}
+
+		const endIndex = match === undefined
 			// A match funtion was provided. Okay to run to array end
 			// or until we've matched maxItemSize elements
-				? Math.min(cursor + maxItemSize, list.length)
+			? Math.min(cursor + maxItemSize, list.length)
 
 			// No match function was provided. We should run till we are
 			// out of items (list.length) or till we gotten the next set
 			// of maxItemSize items
-				: list.length;
+			: list.length;
 
-			while (cursor < endIndex) {
-				const item = list[cursor];
-				cursor += 1;
+		while (cursor < endIndex) {
+			const item = list[cursor];
+			cursor += 1;
 
-				if (match && !match(item)) {
-					continue;
-				}
-
-				items.push(item);
-
-				if (match && items.length === maxItemSize) {
-					break;
-				}
+			if (match && !match(item)) {
+				continue;
 			}
 
-			return {done: false, value: items};
+			items.push(item);
+
+			if (match && items.length === maxItemSize) {
+				break;
+			}
+		}
+
+		return {value: items, done: items.length === 0};
+	};
+
+	const iterable: Iterable<Value<T>> = {
+		[Symbol.iterator](): Iterator<Value<T>> {
+			return {
+				next: proceedNext,
+			};
 		},
 	};
 
 	return iterable;
 };
+
+export default tuplesFromArray;
