@@ -12,13 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Print ENV
-        run: |
-            echo ${ github.event.pull_request.base.ref }
-            echo ${ github.event.pull_request }
-
-    #   - name: Publish to Registry
-    #     uses: JS-DevTools/npm-publish@v3
-    #     with:
-    #       token: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to Registry
+        uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          dry-run: true
         
