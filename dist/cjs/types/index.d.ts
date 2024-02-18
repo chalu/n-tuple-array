@@ -10,3 +10,4 @@ export declare class InvalidInvocationParameterError extends Error {
 }
 export declare const tuplesFromArray: <T>(config: TupleConfig<T>) => Iterable<Value<T>>;
 export default tuplesFromArray;
+//# sourceMappingURL=index.d.ts.map

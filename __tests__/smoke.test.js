@@ -1,4 +1,4 @@
-const {tuplesFromArray, InvalidInvocationParameterError} = require('../dist/index.js');
+const {tuplesFromArray, InvalidInvocationParameterError} = require('../dist/cjs/index.js');
 
 describe('Smoke Tests', () => {
 	it('should throw if input array is not specified', () => {

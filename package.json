@@ -1,24 +1,48 @@
 {
   "name": "@chalu/n-tuple-array",
   "version": "0.0.1",
-  "description": "Get a specified amount of items when iterating over a JavaScript array, instead of just a single item that native arrays provide!",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "Get a specified amount of items when iterating over a JavaScript array, instead of just a single item that arrays provide!",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/types/index.d.ts",
   "files": [
-    "/dist"
+    "dist/**/*"
   ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/types/index.d.ts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
   "scripts": {
-    "build": "tsc",
-    "prebuild": "rm -rf dist/*",
-    "postbuild": "rm -rf dist/demo/*.d.*",
+    "build": "pnpm build:esm && pnpm build:cjs",
+    "prebuild": "rm -rf dist",
+    "build:esm": "tsc -p tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
     "lint": "xo $(git diff --name-only --diff-filter=d HEAD | grep -E '\\.(ts|js)$' | xargs)",
     "lint:fix": "xo --fix $(git diff --name-only --diff-filter=d HEAD | grep -E '\\.(ts|js)$' | xargs)",
-    "test": "jest --runInBand",
+    "test": "jest",
     "pretest": "pnpm lint && pnpm build",
     "test:ci": "jest --ci --config='./jest.config.ci.ts'",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepack": "pnpm build"
   },
-  "keywords": ["array", "tuple", "arrays", "tuples", "iterables", "iterators", "symbol.iterator", "javascript", "typescript"],
+  "keywords": [
+    "array",
+    "tuple",
+    "arrays",
+    "tuples",
+    "iterables",
+    "iterators",
+    "symbol.iterator",
+    "javascript",
+    "typescript"
+  ],
   "author": "Charles Odili <chaluwa@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -32,5 +56,17 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "xo": "^0.57.0"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chalu/n-tuple-array.git"
   }
 }

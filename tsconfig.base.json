@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "rootDir": "./src",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "checkJs": true,
+        "allowJs": true,
+        "declaration": true,
+        "declarationMap": true,
+        "noUncheckedIndexedAccess": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "src/demo/**"
+    ]
+}
