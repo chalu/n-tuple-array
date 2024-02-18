@@ -45,7 +45,7 @@ JS challenge by @thdxr on X.com <br>
 <br> <br>
 
 `n-tuple-array` solution code <br>
-[<img src="./assets/demo-classic.png">](./assets/demo-classic.svg)
+[<img src="./assets/demo-classic.png">](https://github.com/chalu/n-tuple-array/blob/main/src/demo/demo-classic.ts#L6-L40)
 <br> <br>
 
 `n-tuple-array` n-tuple-array solution demo <br>
@@ -56,12 +56,13 @@ JS challenge by @thdxr on X.com <br>
 ## Setup & Usage
 
 ```bash
-npm install n-tuple-array
+npm install @chalu/n-tuple-array
 ```
 
 ```javascript
 import { tuplesFromArray } from 'n-tuple-array';
 
+// some setup
 const numbers = Array.from({length: 100}, (_, i) => i + 1);
 const isEven = (item) => {
     if (
@@ -73,8 +74,14 @@ const isEven = (item) => {
     return true;
 };
 
-for (const triplets of tuplesFromArray({list: numbers, maxItems: 3, match: isEven})) {
-	console.log(triplets);
+// use the lib
+const quintetIterator = tuplesFromArray({
+    list: numbers, maxItems: 5, match: isEven
+});
+
+for (const quintet of quintetIterator) {
+    // prints [ 2, 4, 6, 8, 10 ] ... [ 92, 94, 96, 98, 100 ]
+	console.log(quintet);
 }
 ```
 
