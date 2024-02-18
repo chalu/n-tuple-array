@@ -28,7 +28,7 @@ jobs:
           token: ${{ secrets.NPM_TOKEN }}
           tag: ${{ steps.pkg.outputs.version }}
           dry-run: true
-
+          
       - name: Release Status
         if: ${{ steps.publish.outputs.type }}
         run: echo "Published v${{ steps.pkg.outputs.version }}"
