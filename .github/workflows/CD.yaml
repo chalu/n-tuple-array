@@ -4,7 +4,7 @@ on:
     types: [ closed ]
 
 jobs:
-  build-and-test:
+  publish-to-registry:
     if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
