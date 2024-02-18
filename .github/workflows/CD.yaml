@@ -5,7 +5,7 @@ on:
 
 jobs:
   publish-to-registry:
-    if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.merged == true
+    if: github.event.pull_request.base.ref == 'dev' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
