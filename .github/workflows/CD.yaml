@@ -1,20 +1,29 @@
-name: CD
+name: Release
+
 on:
   pull_request:
+    branches: 
+        - "main"
     types: [ closed ]
 
 jobs:
-  publish-to-registry:
-    if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.merged == true
+  release:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: PKG Info
+        id: pkg
+        uses: jaywcjlove/github-action-package@main
+        with:
+          unset: scripts.prepare
+
       - name: Publish to Registry
+        id: publish
         uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          dry-run: true
-        
+          
