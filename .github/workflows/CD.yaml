@@ -2,7 +2,9 @@ name: Release
 
 on:
   pull_request:
-    types: [ closed ]
+    branches:
+    - "dev"
+    # types: [ closed ]
 
 jobs:
   release:
@@ -25,6 +27,7 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: ${{ steps.pkg.outputs.version }}
+          dry-run: true
 
       - name: Release Status
         if: ${{ steps.publish.outputs.type }}
