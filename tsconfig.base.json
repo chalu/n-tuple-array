@@ -9,6 +9,7 @@
         "allowJs": true,
         "declaration": true,
         "declarationMap": true,
+        "noUncheckedIndexedAccess": true,
         "allowSyntheticDefaultImports": true
     },
     "include": [
