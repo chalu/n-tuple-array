@@ -13,12 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: jaywcjlove/github-action-package@main
+      - name: PKG Info
+        id: pkg
+        uses: jaywcjlove/github-action-package@main
         with:
           unset: scripts.prepare
 
       - name: Publish to Registry
+        id: publish
         uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          tag: ${{ steps.pkg.outputs.version }}
+
+      - name: Release Status
+        if: ${{ steps.publish.outputs.type }}
+        run: echo "Published v${{ steps.pkg.outputs.version }}"
         
