@@ -60,7 +60,7 @@ npm install @chalu/n-tuple-array
 ```
 
 ```javascript
-import { tuplesFromArray } from 'n-tuple-array';
+const { tuplesFromArray } = require('@chalu/n-tuple-array');
 
 // some setup
 const numbers = Array.from({length: 100}, (_, i) => i + 1);
