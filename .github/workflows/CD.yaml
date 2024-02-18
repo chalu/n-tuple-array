@@ -1,0 +1,24 @@
+name: CD
+on:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  build-and-test:
+    if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Print ENV
+        run: |
+            echo ${ github.event.pull_request.base.ref }
+            echo ${ github.event.pull_request }
+
+    #   - name: Publish to Registry
+    #     uses: JS-DevTools/npm-publish@v3
+    #     with:
+    #       token: ${{ secrets.NPM_TOKEN }}
+        
