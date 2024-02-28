@@ -1,6 +1,4 @@
-type Item<T> = T | undefined;
-type Value<T> = Array<Item<T>>;
-type Result<T> = IteratorResult<Value<T>, Value<T>>;
+type Result<T> = IteratorResult<Array<T | undefined>, Array<T | undefined>>;
 
 export type Matcher<T> = (item: T | unknown) => boolean;
 export type TupleConfig<T> = {
@@ -38,7 +36,7 @@ export const tuplesFromArray = <T>(config: TupleConfig<T>) => {
 	const maxItemSize = Number.parseInt(`${maxItems}`, 10);
 
 	const proceedNext = (): Result<T> => {
-		const items: Value<T> = [];
+		const items: Array<T | undefined> = [];
 
 		if (cursor >= list.length) {
 			return {done: true, value: []};
@@ -72,11 +70,11 @@ export const tuplesFromArray = <T>(config: TupleConfig<T>) => {
 		return {value: items, done: items.length === 0};
 	};
 
-	const iterable: Iterable<Value<T>> = {
-		[Symbol.iterator](): Iterator<Value<T>> {
-			return {
-				next: proceedNext,
-			};
+	const iterable: IterableIterator<Array<T | undefined>> = {
+		next: proceedNext,
+
+		[Symbol.iterator](): IterableIterator<Array<T | undefined>> {
+			return this;
 		},
 	};
 
