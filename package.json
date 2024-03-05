@@ -25,7 +25,7 @@
     "build:esm": "tsc -p tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "lint": "xo",
-    "lint:fix": "xo --fix",
+    "lint:MA": "xo $(git diff --name-only --diff-filter=MA HEAD | grep -E 'src/.+\\.(ts|js)$' | xargs)",
     "test": "jest",
     "pretest": "pnpm lint && pnpm build",
     "test:ci": "jest --ci --config='./jest.config.ci.ts'",
