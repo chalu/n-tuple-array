@@ -50,13 +50,13 @@ const tuplesFromArray = (config) => {
         return { value: items, done: items.length === 0 };
     };
     const iterable = {
+        next: proceedNext,
         [Symbol.iterator]() {
-            return {
-                next: proceedNext,
-            };
+            return this;
         },
     };
     return iterable;
 };
 exports.tuplesFromArray = tuplesFromArray;
 exports.default = exports.tuplesFromArray;
+//# sourceMappingURL=index.js.map

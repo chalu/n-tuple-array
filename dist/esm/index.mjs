@@ -1,9 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.tuplesFromArray = exports.InvalidInvocationParameterError = void 0;
-class InvalidInvocationParameterError extends Error {
+export class InvalidInvocationParameterError extends Error {
 }
-exports.InvalidInvocationParameterError = InvalidInvocationParameterError;
 const validateParametersOrThrow = (list, maxItems, match) => {
     if (!list || !Array.isArray(list)) {
         throw new InvalidInvocationParameterError('expected list to be an array');
@@ -18,7 +14,7 @@ const validateParametersOrThrow = (list, maxItems, match) => {
         throw new InvalidInvocationParameterError(message);
     }
 };
-const tuplesFromArray = (config) => {
+export const tuplesFromArray = (config) => {
     const { list, match, maxItems = 2 } = config;
     validateParametersOrThrow(list, maxItems, match);
     let cursor = 0;
@@ -50,13 +46,12 @@ const tuplesFromArray = (config) => {
         return { value: items, done: items.length === 0 };
     };
     const iterable = {
+        next: proceedNext,
         [Symbol.iterator]() {
-            return {
-                next: proceedNext,
-            };
+            return this;
         },
     };
     return iterable;
 };
-exports.tuplesFromArray = tuplesFromArray;
-exports.default = exports.tuplesFromArray;
+export default tuplesFromArray;
+//# sourceMappingURL=index.js.map

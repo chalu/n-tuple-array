@@ -1,5 +1,3 @@
-type Item<T> = T | undefined;
-type Value<T> = Array<Item<T>>;
 export type Matcher<T> = (item: T | unknown) => boolean;
 export type TupleConfig<T> = {
     list: T[];
@@ -8,6 +6,6 @@ export type TupleConfig<T> = {
 };
 export declare class InvalidInvocationParameterError extends Error {
 }
-export declare const tuplesFromArray: <T>(config: TupleConfig<T>) => Iterable<Value<T>>;
+export declare const tuplesFromArray: <T>(config: TupleConfig<T>) => IterableIterator<(T | undefined)[]>;
 export default tuplesFromArray;
 //# sourceMappingURL=index.d.ts.map
