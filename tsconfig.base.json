@@ -1,21 +1,35 @@
 {
     "compilerOptions": {
         "strict": true,
-        "rootDir": "./src",
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
+        "pretty": true,
         "checkJs": true,
         "allowJs": true,
+        "rootDir": "./src",
+        "skipLibCheck": true,
         "declaration": true,
+        "esModuleInterop": true,
         "declarationMap": true,
+        "sourceMap": true,
+        "inlineSourceMap": false,
+        "resolveJsonModule": true,
+        "moduleResolution": "Node",
+        "moduleDetection": "force",
         "noUncheckedIndexedAccess": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "lib": [
+            "ES2022",
+            "DOM",
+            "DOM.Iterable"
+        ]
     },
     "include": [
         "src/**/*"
     ],
     "exclude": [
-        "src/demo/**"
+        "src/examples/**",
+        "node_modules",
+        "dist"
     ]
 }
