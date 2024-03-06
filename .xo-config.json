@@ -1,6 +1,7 @@
 {
     "env": ["jest", "node"],
     "rules": {
+        "no-await-in-loop": "off",
         "import/extensions": "off",
         "unicorn/prefer-module": "off",
         "unicorn/no-array-for-each": "off",

@@ -1,7 +1,7 @@
-import {tuplesFromArray} from '../index';
+import {tuplesFromArray} from '../../index';
 import {
 	hexadecimals, isDate, dates, uuids,
-} from './demo-utils';
+} from './utils';
 
 console.log('----- Example 1 [10 Hex in twos. Used default param values] ------');
 for (const hexPair of tuplesFromArray({list: hexadecimals(10)})) {
