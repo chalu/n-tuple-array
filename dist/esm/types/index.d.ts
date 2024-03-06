@@ -1,10 +1,5 @@
 export type Matcher<T> = (item: T | unknown) => boolean;
-/**
- * The invocation argument type
- *
- * @typeParam T - Type of items the input list contains
- */
-export interface TupleConfig<T> {
+export type TupleConfig<T> = {
     /**
      * The input array to use
      */
@@ -19,7 +14,7 @@ export interface TupleConfig<T> {
      * are eligible to be included, per iteration
      */
     match?: Matcher<T>;
-}
+};
 /**
  * An exception than can be thrown if there is no input array, `maxItems` is <= 0 or is not
  * a number, or `match` is not a function

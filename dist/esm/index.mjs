@@ -1,4 +1,3 @@
-;
 /**
  * An exception than can be thrown if there is no input array, `maxItems` is <= 0 or is not
  * a number, or `match` is not a function
