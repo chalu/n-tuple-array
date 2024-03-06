@@ -59,6 +59,7 @@ It was a simulation of people entering an event hall to get seated, but **only t
 <br> <br>
 
 `n-tuple-array` solution demo <br>
+`n-tuple-array` solution demo <br>
 ![](./assets/ntuple-array-demo-optimized.gif "n-tuple-array solution demo")
 
  
@@ -70,6 +71,7 @@ npm install @chalu/n-tuple-array
 ```
 
 ```javascript
+const { tuplesFromArray } = require('@chalu/n-tuple-array');
 const { tuplesFromArray } = require('@chalu/n-tuple-array');
 
 // some setup
