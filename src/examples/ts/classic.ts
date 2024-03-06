@@ -1,7 +1,7 @@
-import {tuplesFromArray} from '../index';
+import {tuplesFromArray} from '../../index';
 import {
 	isDate, dates, canadaDateFormat, delay, formatCount,
-} from './demo-utils';
+} from './utils';
 
 const processItem = async <T>(item: T | undefined) => {
 	await delay(Math.random() * 500); // Simulate some async workload

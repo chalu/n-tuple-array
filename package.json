@@ -1,8 +1,9 @@
 {
   "name": "@chalu/n-tuple-array",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Get a specified amount of items when iterating over a JavaScript array, instead of just a single item that arrays provide!",
   "main": "./dist/cjs/index.js",
+  "module": "dist/esm/index.mjs",
   "types": "./dist/cjs/types/index.d.ts",
   "files": [
     "dist/**/*"
@@ -20,12 +21,12 @@
     }
   },
   "scripts": {
-    "build": "pnpm build:esm && pnpm build:cjs",
+    "build": "pnpm build:esm && pnpm build:cjs && ./fix-pkgs",
     "prebuild": "rm -rf dist",
     "build:esm": "tsc -p tsconfig.esm.json && mv dist/esm/index.js dist/esm/index.mjs",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "lint": "xo $(git diff --name-only --diff-filter=d HEAD | grep -E '\\.(ts|js)$' | xargs)",
-    "lint:fix": "xo --fix $(git diff --name-only --diff-filter=d HEAD | grep -E '\\.(ts|js)$' | xargs)",
+    "lint": "xo",
+    "lint:MA": "xo $(git diff --name-only --diff-filter=MA HEAD | grep -E 'src/.+\\.(ts|js)$' | xargs)",
     "test": "jest",
     "pretest": "pnpm lint && pnpm build",
     "test:ci": "jest --ci --config='./jest.config.ci.ts'",
