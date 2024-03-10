@@ -1,6 +1,8 @@
 # n-tuple-array
 
-Get a **`configurable`** amount of items when iterating over a JavaScript array, instead of a single item that arrays provide per iteration, by default.
+Get a **`configurable`** amount of items when iterating over a JavaScript array, instead of a single item that arrays provide per iteration, by default. 
+
+Put differently, easily and safely retrieve a configurable number of items from an array, without having to manipulate array bounds or indices.
 
 
 ## Motivation
@@ -8,7 +10,7 @@ Get a **`configurable`** amount of items when iterating over a JavaScript array,
 Imagine that you received a large collection of coordinates (latitude and longitude), but they were sent 
 as a flat array of values to speed up the data transfer.
 
-`n-tuple-array` can help you get out the coordinates in pairs (i.e their logical representation), such that you'd go
+`n-tuple-array` can help you get out the coordinates in pairs (i.e their logical representation), such that you'd __easily__ go
 
 **from** 
 ```json
@@ -16,17 +18,24 @@ as a flat array of values to speed up the data transfer.
 ["5.7225", "-9.6273", "2.68452", "-30.9501", ...]
 ```
 
-**to**
+**to** 
+```json
+// coordinates in pairs
+[["5.7225", "-9.6273"], ["2.68452", "-30.9501"], ...]
+```
+
+**using**
 ```javascript
 // the iterable will generate pairs by default
 const coordsIterable = tuplesFromArray({ list: flatCoords });
 
-// using for..of, get pairs as ["5.7225", "-9.6273"] ...
+// with for..of, get pairs as ["5.7225", "-9.6273"] ...
 for (const pair of coordsIterable) {
     console.log(pair);
 }
 
-// OR manipulate pairs with regular array 
+// OR 
+// manipulate pairs with regular array 
 // functions like map, filter, forEach ...
 const coordsInPairs = Array.from(coordsIterable);
 console.log(Array.isArray(coordsInPairs));   // true
@@ -40,28 +49,6 @@ coordsInPairs
         placeOnMap(pair);
     });
 ```
-
-### Some Real World Examples
-
-#### 1. Wole Joko
-
-I first tried my hands on this concept when [fleshing out wole-joko](https://github.com/chalu/wole-joko/blob/dev/src/js/utils.js#L57-L92), which strated as a _live coding task_ I was asked to do in an engineering manager interview :man_shrugging 
-It was a simulation of people entering an event hall to get seated, but **only two** could get in at a time - https://wole-joko.netlify.app/
-
-#### 2. Execute max of `N` async tasks
-
-![](./assets/the-dax-js-challenge.png "JS challenge by @thdxr")
-
-> The below was adapted for more concise terminal output
-
-`n-tuple-array` solution. View [code here](https://github.com/chalu/n-tuple-array/blob/main/src/examples/classic.ts#L6-L40)  <br>
-![](./assets/demo-classic.png "n-tuple-array solution")
-<br> <br>
-
-`n-tuple-array` solution demo <br>
-![](./assets/ntuple-array-demo-optimized.gif "n-tuple-array solution demo")
-
- 
 
 ## Setup & Usage
 
@@ -84,16 +71,39 @@ const isEven = (item) => {
     return true;
 };
 
-// use the lib
+// use the lib, get batches of <= 5 nums
+// from the collection in numbers above
 const quintetIterator = tuplesFromArray({
     list: numbers, maxItems: 5, match: isEven
 });
 
+// since quintetIterator uses the isEven match
+// function, give us only even numbers in fives
 for (const quintet of quintetIterator) {
     // prints [ 2, 4, 6, 8, 10 ] ... [ 92, 94, 96, 98, 100 ]
 	console.log(quintet);
 }
 ```
+
+### Some Real World Examples
+
+#### 1. Wole Joko
+
+I first tried my hands on this concept when [fleshing out wole-joko](https://github.com/chalu/wole-joko/blob/dev/src/js/utils.js#L57-L92), which strated as a _live coding task_ I was asked to do in an engineering manager interview :man_shrugging 
+It was a simulation of people entering an event hall to get seated, but **only two** could get in at a time - https://wole-joko.netlify.app/
+
+#### 2. Execute max of `N` async tasks at the same time
+
+![](./assets/the-dax-js-challenge.png "JS challenge by @thdxr")
+
+> The below was adapted for more concise terminal output
+
+`n-tuple-array` solution. View [code here](https://github.com/chalu/n-tuple-array/blob/main/src/examples/classic.ts#L6-L40)  <br>
+![](./assets/demo-classic.png "n-tuple-array solution")
+<br> <br>
+
+`n-tuple-array` solution demo <br>
+![](./assets/ntuple-array-demo-optimized.gif)
 
 See more examples in [src/examples](./src/examples/) 
 
