@@ -24,7 +24,7 @@ const executeConcurrent = async (todos, maxBatchSize) => {
 			done.push(result);
 			todo = todosCopy.shift();
 		}
-	}; 
+	};
 
 	const batchStarters = Array.from({length: maxBatchSize}, worker);
 	await Promise.all(batchStarters);
