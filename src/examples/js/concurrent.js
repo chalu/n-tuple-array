@@ -14,6 +14,7 @@ const processTask = async (todo, batchId) => {
 };
 
 const executeConcurrent = async (todos, maxBatchSize) => {
+	console.log(`\ndo <= ${maxBatchSize} of ${todos.length} tasks (concurrently), at any given time\n`);
 	const done = [];
 	const todosCopy = todos.slice();
 	const worker = async (_, batchIndex) => {
@@ -23,7 +24,7 @@ const executeConcurrent = async (todos, maxBatchSize) => {
 			done.push(result);
 			todo = todosCopy.shift();
 		}
-	};
+	}; 
 
 	const batchStarters = Array.from({length: maxBatchSize}, worker);
 	await Promise.all(batchStarters);
@@ -35,5 +36,5 @@ const executeConcurrent = async (todos, maxBatchSize) => {
 	const maxTasksPerTime = 2;
 
 	const allDone = await executeConcurrent(tasks, maxTasksPerTime);
-	console.log(allDone);
+	console.log('\n', allDone);
 })();
