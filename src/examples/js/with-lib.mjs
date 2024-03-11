@@ -16,13 +16,13 @@ const processTask = async (todo, batchId) => {
 };
 
 const executeWitLibrary = async (todos, maxBatchSize) => {
-	console.log(`do <= ${maxBatchSize} of ${todos.length} tasks, at any given time`);
+	console.log(`\ndo <= ${maxBatchSize} of ${todos.length} tasks, at any given time (with library)`);
 	const done = [];
 
 	let batchIndex = 1;
 	const todosBatchIterable = tuplesFromArray({list: todos, maxItems: maxBatchSize});
 	for (const batch of todosBatchIterable) {
-		console.log(`----- starting batch [${batchIndex}], ${batch.length} todos`);
+		console.log(`\n----- starting batch [${batchIndex}], ${batch.length} todos`);
 		const results = await Promise.allSettled(
 			batch.map(todo => processTask(todo, batchIndex)),
 		);
@@ -39,5 +39,5 @@ const executeWitLibrary = async (todos, maxBatchSize) => {
 	const maxTasksPerTime = 2;
 
 	const allDone = await executeWitLibrary(tasks, maxTasksPerTime);
-	console.log(allDone);
+	console.log('\n', allDone);
 })();

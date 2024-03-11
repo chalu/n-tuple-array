@@ -15,7 +15,7 @@ const processTask = async (todo, batchId) => {
 
 // Everywhere start/end is used is repititive and error prone
 const executeWithoutLibrary = async (todos, maxBatchSize) => {
-	console.log(`do <= ${maxBatchSize} of ${todos.length} tasks, at any given time`);
+	console.log(`\ndo <= ${maxBatchSize} of ${todos.length} tasks, at any given time (no library)`);
 	const done = [];
 
 	let start = 0;
@@ -23,7 +23,7 @@ const executeWithoutLibrary = async (todos, maxBatchSize) => {
 	let batchIndex = 1;
 	let batch = todos.slice(start, end);
 	while (batch.length > 0) {
-		console.log(`----- starting batch [${batchIndex}], ${batch.length} todos`);
+		console.log(`\n----- starting batch [${batchIndex}], ${batch.length} todos`);
 		const results = await Promise.allSettled(
 			batch.map(todo => processTask(todo, batchIndex)),
 		);
@@ -48,5 +48,5 @@ const executeWithoutLibrary = async (todos, maxBatchSize) => {
 	const maxTasksPerTime = 2;
 
 	const allDone = await executeWithoutLibrary(tasks, maxTasksPerTime);
-	console.log(allDone);
+	console.log('\n', allDone);
 })();
