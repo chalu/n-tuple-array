@@ -1,7 +1,7 @@
 {
   "name": "@chalu/n-tuple-array",
-  "version": "0.1.6",
-  "description": "Get a specified amount of items when iterating over a JavaScript array, instead of just a single item that arrays provide!",
+  "version": "0.1.7",
+  "description": "Configure and get a specified amount of items when iterating over a JavaScript array.",
   "main": "./dist/cjs/index.js",
   "module": "dist/esm/index.mjs",
   "types": "./dist/cjs/types/index.d.ts",
